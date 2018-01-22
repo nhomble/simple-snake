@@ -1727,7 +1727,7 @@ $c_Lorg_hombro_snake_App$.prototype.gameStart__p1__Lorg_scalajs_dom_raw_HTMLCanv
       };
       snake$1.move__V();
       if ((!snake$1.isAlive__Z())) {
-        $m_Lorg_scalajs_dom_package$().window__Lorg_scalajs_dom_raw_Window().alert(new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Game over with a final length of ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([snake$1.body__sci_Set().size__I()])));
+        $m_Lorg_scalajs_dom_package$().window__Lorg_scalajs_dom_raw_Window().alert(new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Game over with a final score of ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([snake$1.state$1.score$1])));
         var this$3 = $m_Lorg_hombro_snake_App$().interval$1;
         if ((!this$3.isEmpty__Z())) {
           var arg1 = this$3.get__O();
@@ -1851,6 +1851,7 @@ function $m_Lorg_hombro_snake_App$() {
 /** @constructor */
 function $c_Lorg_hombro_snake_SnakeState() {
   $c_O.call(this);
+  this.score$1 = 0;
   this.food$1 = null;
   this.direction$1 = null;
   this.parts$1 = null
@@ -1862,13 +1863,8 @@ function $h_Lorg_hombro_snake_SnakeState() {
   /*<skip>*/
 }
 $h_Lorg_hombro_snake_SnakeState.prototype = $c_Lorg_hombro_snake_SnakeState.prototype;
-$c_Lorg_hombro_snake_SnakeState.prototype.init___T2__Lorg_hombro_snake_package$Direction__sci_List = (function(food, direction, parts) {
-  this.food$1 = food;
-  this.direction$1 = direction;
-  this.parts$1 = parts;
-  return this
-});
 $c_Lorg_hombro_snake_SnakeState.prototype.move__T2__Lorg_hombro_snake_SnakeState = (function(next) {
+  var jsx$6 = this.score$1;
   var jsx$5 = this.food$1;
   var jsx$4 = this.direction$1;
   $m_sci_List$();
@@ -1880,7 +1876,7 @@ $c_Lorg_hombro_snake_SnakeState.prototype.move__T2__Lorg_hombro_snake_SnakeState
   var this$3 = this.parts$1;
   var jsx$1 = jsx$2.slice__I__I__sci_List(0, (((-1) + $f_sc_LinearSeqOptimized__length__I(this$3)) | 0));
   var this$4 = $m_sci_List$();
-  return new $c_Lorg_hombro_snake_SnakeState().init___T2__Lorg_hombro_snake_package$Direction__sci_List(jsx$5, jsx$4, $as_sci_List(jsx$3.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$1, this$4.ReusableCBFInstance$2)))
+  return new $c_Lorg_hombro_snake_SnakeState().init___I__T2__Lorg_hombro_snake_package$Direction__sci_List(jsx$6, jsx$5, jsx$4, $as_sci_List(jsx$3.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$1, this$4.ReusableCBFInstance$2)))
 });
 $c_Lorg_hombro_snake_SnakeState.prototype.random__p1__sci_Set__T2 = (function(pairs) {
   var jsx$3 = $m_s_util_Random$();
@@ -1904,6 +1900,7 @@ $c_Lorg_hombro_snake_SnakeState.prototype.random__p1__sci_Set__T2 = (function(pa
   return $as_T2($as_sc_IterableLike(jsx$3.shuffle__sc_TraversableOnce__scg_CanBuildFrom__sc_TraversableOnce(jsx$1, new $c_scg_GenSetFactory$$anon$1().init___scg_GenSetFactory(this$2))).head__O())
 });
 $c_Lorg_hombro_snake_SnakeState.prototype.eat__sci_Set__Lorg_hombro_snake_SnakeState = (function(pairs) {
+  var jsx$5 = this.score$1;
   var jsx$4 = this.random__p1__sci_Set__T2(pairs);
   var jsx$3 = this.direction$1;
   $m_sci_List$();
@@ -1913,7 +1910,23 @@ $c_Lorg_hombro_snake_SnakeState.prototype.eat__sci_Set__Lorg_hombro_snake_SnakeS
   var jsx$2 = $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs, cbf));
   var jsx$1 = this.parts$1;
   var this$3 = $m_sci_List$();
-  return new $c_Lorg_hombro_snake_SnakeState().init___T2__Lorg_hombro_snake_package$Direction__sci_List(jsx$4, jsx$3, $as_sci_List(jsx$2.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$1, this$3.ReusableCBFInstance$2)))
+  return new $c_Lorg_hombro_snake_SnakeState().init___I__T2__Lorg_hombro_snake_package$Direction__sci_List(((1 + jsx$5) | 0), jsx$4, jsx$3, $as_sci_List(jsx$2.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$1, this$3.ReusableCBFInstance$2)))
+});
+$c_Lorg_hombro_snake_SnakeState.prototype.turn__Lorg_hombro_snake_package$Direction__Lorg_hombro_snake_SnakeState = (function(d) {
+  var x = d.opposite__Lorg_hombro_snake_package$Direction();
+  var x$2 = this.direction$1;
+  if ((!((x === null) ? (x$2 === null) : x.equals__O__Z(x$2)))) {
+    return new $c_Lorg_hombro_snake_SnakeState().init___I__T2__Lorg_hombro_snake_package$Direction__sci_List(this.score$1, this.food$1, d, this.parts$1)
+  } else {
+    return this
+  }
+});
+$c_Lorg_hombro_snake_SnakeState.prototype.init___I__T2__Lorg_hombro_snake_package$Direction__sci_List = (function(score, food, direction, parts) {
+  this.score$1 = score;
+  this.food$1 = food;
+  this.direction$1 = direction;
+  this.parts$1 = parts;
+  return this
 });
 var $d_Lorg_hombro_snake_SnakeState = new $TypeData().initClass({
   Lorg_hombro_snake_SnakeState: 0
@@ -7446,7 +7459,7 @@ $c_Lorg_hombro_snake_Snake.prototype.init___I__I = (function(width, height) {
   var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_s_Tuple2$mcII$sp().init___I__I(3, 1), new $c_s_Tuple2$mcII$sp().init___I__I(2, 1), new $c_s_Tuple2$mcII$sp().init___I__I(1, 1)]);
   var this$2 = $m_sci_List$();
   var cbf = this$2.ReusableCBFInstance$2;
-  this.state$1 = new $c_Lorg_hombro_snake_SnakeState().init___T2__Lorg_hombro_snake_package$Direction__sci_List(jsx$2, jsx$1, $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs, cbf)));
+  this.state$1 = new $c_Lorg_hombro_snake_SnakeState().init___I__T2__Lorg_hombro_snake_package$Direction__sci_List(0, jsx$2, jsx$1, $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs, cbf)));
   $m_sci_List$();
   $m_sci_List$();
   var b = new $c_scm_ListBuffer().init___();
@@ -7612,15 +7625,14 @@ $c_Lorg_hombro_snake_Snake.prototype.outOfBounds__p1__Z = (function() {
   return ((((h.$$und1$mcI$sp__I() <= 0) || (h.$$und1$mcI$sp__I() >= (((-1) + this.width$1) | 0))) || (h.$$und2$mcI$sp__I() <= 0)) || (h.$$und2$mcI$sp__I() >= (((-1) + this.height$1) | 0)))
 });
 $c_Lorg_hombro_snake_Snake.prototype.turn__Lorg_hombro_snake_package$Direction__V = (function(d) {
-  var this$1 = this.state$1;
-  this.state$1 = new $c_Lorg_hombro_snake_SnakeState().init___T2__Lorg_hombro_snake_package$Direction__sci_List(this$1.food$1, d, this$1.parts$1)
+  this.state$1 = this.state$1.turn__Lorg_hombro_snake_package$Direction__Lorg_hombro_snake_SnakeState(d)
 });
 $c_Lorg_hombro_snake_Snake.prototype.isAlive__Z = (function() {
   var h = $as_T2(this.state$1.parts$1.head__O());
   if ((!this.outOfBounds__p1__Z())) {
     var jsx$1 = this.state$1.parts$1;
     var this$1 = this.state$1.parts$1;
-    var this$2 = jsx$1.slice__I__I__sci_List(1, (((-1) + $f_sc_LinearSeqOptimized__length__I(this$1)) | 0));
+    var this$2 = jsx$1.slice__I__I__sci_List(1, $f_sc_LinearSeqOptimized__length__I(this$1));
     return (!$f_sc_LinearSeqOptimized__contains__O__Z(this$2, h))
   } else {
     return false
@@ -9064,6 +9076,9 @@ $c_Lorg_hombro_snake_package$East.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
   return this$2.productHash__s_Product__I__I(this, (-889275714))
 });
+$c_Lorg_hombro_snake_package$East.prototype.opposite__Lorg_hombro_snake_package$Direction = (function() {
+  return new $c_Lorg_hombro_snake_package$West().init___()
+});
 $c_Lorg_hombro_snake_package$East.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
 });
@@ -9123,6 +9138,9 @@ $c_Lorg_hombro_snake_package$North.prototype.toString__T = (function() {
 $c_Lorg_hombro_snake_package$North.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
   return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Lorg_hombro_snake_package$North.prototype.opposite__Lorg_hombro_snake_package$Direction = (function() {
+  return new $c_Lorg_hombro_snake_package$South().init___()
 });
 $c_Lorg_hombro_snake_package$North.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
@@ -9184,6 +9202,9 @@ $c_Lorg_hombro_snake_package$South.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
   return this$2.productHash__s_Product__I__I(this, (-889275714))
 });
+$c_Lorg_hombro_snake_package$South.prototype.opposite__Lorg_hombro_snake_package$Direction = (function() {
+  return new $c_Lorg_hombro_snake_package$North().init___()
+});
 $c_Lorg_hombro_snake_package$South.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
 });
@@ -9243,6 +9264,9 @@ $c_Lorg_hombro_snake_package$West.prototype.toString__T = (function() {
 $c_Lorg_hombro_snake_package$West.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
   return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Lorg_hombro_snake_package$West.prototype.opposite__Lorg_hombro_snake_package$Direction = (function() {
+  return new $c_Lorg_hombro_snake_package$East().init___()
 });
 $c_Lorg_hombro_snake_package$West.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
