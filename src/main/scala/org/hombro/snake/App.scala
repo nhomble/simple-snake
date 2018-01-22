@@ -74,7 +74,7 @@ object App {
       snake.move()
 
       if (!snake.isAlive) {
-        dom.window.alert(s"Game over with a final length of ${snake.body.size}")
+        dom.window.alert(s"Game over with a final score of ${snake.score}")
         interval.foreach(i => js.timers.clearInterval(i))
       }
       else {

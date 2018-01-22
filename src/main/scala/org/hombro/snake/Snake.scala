@@ -2,21 +2,21 @@ package org.hombro.snake
 
 import scala.util.Random
 
-private class SnakeState(val food: Cell, val direction: Direction, val parts: List[Cell]) {
+private class SnakeState(val score: Int, val food: Cell, val direction: Direction, val parts: List[Cell]) {
 
   private def random(pairs: Set[Cell]): Cell = {
     Random.shuffle(pairs.diff(Set(food) ++ parts)).head
   }
 
-  def eat(pairs: Set[Cell]): SnakeState = new SnakeState(random(pairs), direction, List(food) ++ parts)
+  def eat(pairs: Set[Cell]): SnakeState = new SnakeState(score + 1, random(pairs), direction, List(food) ++ parts)
 
-  def move(next: Cell): SnakeState = new SnakeState(food, direction, List(next) ++ parts.slice(0, parts.size - 1))
+  def move(next: Cell): SnakeState = new SnakeState(score, food, direction, List(next) ++ parts.slice(0, parts.size - 1))
 
-  def turn(d: Direction): SnakeState = new SnakeState(food, d, parts)
+  def turn(d: Direction): SnakeState = if (d.opposite() != direction) new SnakeState(score, food, d, parts) else this
 }
 
 case class Snake(private val width: Int, private val height: Int) {
-  private var state = new SnakeState((5, 2), East(), List((3, 1), (2, 1), (1, 1)))
+  private var state = new SnakeState(0, (5, 2), East(), List((3, 1), (2, 1), (1, 1)))
 
   val border: List[Cell] = List(
     List.tabulate(width)(n => List((n, 0), (n, height))),
@@ -37,6 +37,8 @@ case class Snake(private val width: Int, private val height: Int) {
 
   def body: Set[Cell] = state.parts.toSet
 
+  def score: Int = state.score
+
   def turn(d: Direction): Unit = {
     state = state.turn(d)
   }
@@ -45,10 +47,8 @@ case class Snake(private val width: Int, private val height: Int) {
 
   def isAlive: Boolean = {
     val h = state.parts.head
-    !outOfBounds() && !state.parts.slice(1, state.parts.size - 1).contains(h)
+    !outOfBounds() && !state.parts.slice(1, state.parts.size).contains(h)
   }
-
-  private def collides(next: Cell) = state.parts.contains(next) || outOfBounds()
 
   def move(): Unit = {
     val head = state.parts.head
