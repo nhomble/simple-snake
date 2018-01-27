@@ -5,7 +5,7 @@ import scala.util.Random
 private class SnakeState(val score: Int, val food: Cell, val direction: Direction, val parts: List[Cell]) {
 
   private def random(pairs: Set[Cell]): Cell = {
-    Random.shuffle(pairs.diff(Set(food) ++ parts)).head
+    Random.shuffle(pairs.diff(Set(food) ++ parts).toList).head
   }
 
   def eat(pairs: Set[Cell]): SnakeState = new SnakeState(score + 1, random(pairs), direction, List(food) ++ parts)
@@ -24,8 +24,8 @@ case class Snake(private val width: Int, private val height: Int) {
   ).flatMap(l => l.flatten)
 
   private val pairs = for {
-    i <- 1 until width
-    j <- 1 until height
+    i <- 1 until width - 1
+    j <- 1 until height - 1
   } yield {
     (i, j)
   }
